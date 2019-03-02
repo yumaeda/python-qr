@@ -15,11 +15,12 @@ cp ./.pydistutils.cfg ~/.pydistutils.cfg
 ## Install MyQR
 
 ```bash
-pip3 install myqr
+pip3 install myqr --user
+pip3 install pyqrcode --user
 ```
 
 ## Generate QR Code
 
 ```bash
-python ./generate_qr.py 
+python3 ./generate_qr.py 
 ```
