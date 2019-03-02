@@ -7,6 +7,11 @@
 brew install python3
 ```
 
+## Fix pip3 install <module> -t option
+```bash
+cp ./.pydistutils.cfg ~/.pydistutils.cfg
+```
+
 ## Install MyQR
 
 ```bash
