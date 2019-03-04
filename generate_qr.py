@@ -1,4 +1,6 @@
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), 'vendors'))
 from MyQR import myqr
 
 url = 'https://github.com/yumaeda/python-qr'

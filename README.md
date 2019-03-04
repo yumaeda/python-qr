@@ -1,26 +1,31 @@
-# Mac
+# CentOS 7
 
-## Install Python 3
+## Install Prerequisites
 
 ```bash
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-brew install python3
+sudo yum install gcc openssl-devel bzip2-devel
+sudo yum install -y libffi-devel
 ```
 
-## Fix pip3 install <module> -t option
+## Download and Extract Python 3.7
+
 ```bash
-cp ./.pydistutils.cfg ~/.pydistutils.cfg
+sudo cd /usr/src
+sudo wget https://www.python.org/ftp/python/3.7.2/Python-3.7.2.tgz
+sudo tar xzf Python-3.7.2.tgz
+sudo rm Python-3.7.2.tgz
 ```
 
-## Install MyQR
+## Install Python 3.7
 
 ```bash
-pip3 install myqr --user
-pip3 install pyqrcode --user
+cd Python-3.7.2
+sudo ./configure --enable-optimizations
+sudo make altinstall
 ```
 
-## Generate QR Code
+## Execute
 
 ```bash
-python3 ./generate_qr.py 
+python3.7 generate_qr
 ```
