@@ -10,15 +10,15 @@ outDir = os.getcwd()
 
 try:
     version, level, qr_name = myqr.run(
-	url,
-	version = 10,
-	level = 'H',
-	picture = srcImg,
-	colorized = True,
-	contrast = 1.0,
-	brightness = 1.0,
-	save_name = output,
-	save_dir = outDir
+        url,
+        version = 10,
+        level = 'H',
+        picture = srcImg,
+        colorized = True,
+        contrast = 1.0,
+        brightness = 1.0,
+        save_name = output,
+        save_dir = outDir
     )
 except:
     import traceback
