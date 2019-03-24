@@ -1,28 +1,30 @@
 import os
 import json
+import urllib.request
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), 'vendors'))
 from MyQR import myqr
 
 def lambda_handler(event, context):
+    SRC_FILE = 'src.jpg'
     OUT_FILE = 'target.gif'
-    OUT_DIR = '/tmp'
-    BUCKET = 'yumaeda'
+    OUT_DIR  = '/tmp'
+    BUCKET   = 'yumaeda'
 
-    text = 'https://github.com/yumaeda/python-qr'
-    if 'text' in event:
-        text = event['text']
+    # Get parameters
+    img  = event['img']
+    text = event['text']
 
-    img = 'src.jpg'
-    if 'img' in event:
-        img = event['img']
+    # Download and save the image as /tmp/src.jpg
+    filename = '{}/{}'.format(OUT_DIR, SRC_FILE)
+    urllib.request.urlretrieve(img, filename)
 
     try:
         version, level, qr_name = myqr.run(
             text,
             version = 10,
-            level = 'H',
-            picture = img,
+            level = 'M',
+            picture = filename,
             colorized = True,
             contrast = 1.0,
             brightness = 1.0,
