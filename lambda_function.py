@@ -1,13 +1,16 @@
 import os
 import json
 import urllib.request
+import time
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), 'vendors'))
 from MyQR import myqr
 
 def lambda_handler(event, context):
+    S3_ROOT  = 'https://s3.amazonaws.com'
+    S3_DIR   = 'qrcode'
     SRC_FILE = 'src.jpg'
-    OUT_FILE = 'target.gif'
+    OUT_FILE = 'output_{}.gif'.format(int(round(time.time() * 1000)))
     OUT_DIR  = '/tmp'
     BUCKET   = 'yumaeda'
 
@@ -37,14 +40,24 @@ def lambda_handler(event, context):
         bucket = s3.Bucket(BUCKET)
         bucket.upload_file(
             '{0}/{1}'.format(OUT_DIR, OUT_FILE),
-            'qrcode/{}'.format(OUT_FILE)
+            '{0}/{1}'.format(S3_DIR, OUT_FILE)
         )
+
+        # Set public-read ACL
+        s3.ObjectAcl(
+            BUCKET, 
+            '{0}/{1}'.format(S3_DIR, OUT_FILE)
+        ).put(ACL='public-read')
     except:
         import traceback
         traceback.print_exc()
 
     return {
         'statusCode': 200,
-        'img': json.dumps(img),
+        'img': json.dumps(
+            '{0}/{1}/{2}/{3}'.format(
+                S3_ROOT, BUCKET, S3_DIR, OUT_FILE
+            )
+        ),
         'text': json.dumps(text)
     }
